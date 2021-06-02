@@ -82,7 +82,7 @@ pipeline {
 				AWS_S3_BUCKET = 'testbucketnallangi'
 				AWS_EB_APP_NAME = 'petclinic-qa'
 				AWS_EB_ENVIRONMENT = 'Petclinicqa-env'
-				AWS_EB_APP_VERSION = "$Version"
+				AWS_EB_APP_VERSION = "petclinic-${BUILD_TAG}"
 			}
            steps {
               script { 
@@ -118,7 +118,7 @@ pipeline {
 				AWS_S3_BUCKET = 'testbucketnallangi'
 				AWS_EB_APP_NAME = 'petclinic-qa'
 				AWS_EB_ENVIRONMENT = 'Petclinicprod-env-1'
-				AWS_EB_APP_VERSION = "$Version"
+				AWS_EB_APP_VERSION = "petclinic-${BUILD_TAG}"
 			}
            steps {
               script { 
