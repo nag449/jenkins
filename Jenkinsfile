@@ -1,28 +1,39 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
-    }
+	tools
+	{
+		maven 'mavenhome'
+		jdk 'jdkhome'
+	}
+	parameters {
+            string(name: 'Version', defaultValue: '8.0.0')
+        }
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building'
+		stage('checout scm')
+		{
+			steps
+			{
+				git branch: 'master', url: 'https://github.com/nag449/PetClinic.git'
+			}
+		}
+        stage('build') {
+           steps {
+              script { 
+
+                 def server = Artifactory.server 'artifactory'
+				 def rtMaven = Artifactory.newMavenBuild()
+                 rtMaven.deployer server: server, releaseRepo: 'nallangi-repo', snapshotRepo: 'nallangi-repo'
+				 rtMaven.deployer.deployArtifacts = false
+				 
+				 def buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install -Dbuild.number=$Version'
+				 
+				 echo "sleeping 10 secs"
+				 sleep 10
+				 rtMaven.deployer.deployArtifacts buildInfo
+               }
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing'
-            }
-        }
-        stage('Sanity check') {
-            steps {
-                input "Does the staging environment look ok?"
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying'
-            }
-        }
-    }
+		
+		
+    } 
 }
