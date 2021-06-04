@@ -32,11 +32,9 @@ pipeline {
 				 sleep 10
 				 rtMaven.deployer.deployArtifacts buildInfo
                }
-            }			
-        }
-		stage('Promoting to Dev')
-		{
-			input{
+            }
+		  
+		  input{
 				message "Logon to build user, Press Proceed to continue"
 				submitter "build"
 					parameters {
@@ -46,6 +44,10 @@ pipeline {
 				steps { 
 				echo "User: ${username} said Ok."
 				}
+        }
+		stage('Promoting to Dev')
+		{
+			
 		
 		}
 		
