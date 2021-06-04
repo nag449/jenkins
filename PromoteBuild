@@ -33,15 +33,16 @@ pipeline {
 				 rtMaven.deployer.deployArtifacts buildInfo
                }
 	       
-	       input{
+	       
+            }
+	
+	input{
 				message "Logon to build user, Press Proceed to continue"
 				submitter "build"
 					parameters {
 					string(name:'username', defaultValue: 'build', description: 'Promoting to Dev')
 					}
 				}
-            }
-		  
 		  
 
         }	
