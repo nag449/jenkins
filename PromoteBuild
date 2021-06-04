@@ -34,17 +34,8 @@ pipeline {
                }
 	       
 	       
-            }
-	
-	input{
-				message "Logon to build user, Press Proceed to continue"
-				submitter "build"
-					parameters {
-					string(name:'username', defaultValue: 'build', description: 'Promoting to Dev')
-					}
-				}
+            }		
 		  
-
         }	
 		stage('Deploy to Dev') {
 			environment {
@@ -54,6 +45,15 @@ pipeline {
 				AWS_EB_ENVIRONMENT = 'Petclinicdev-env-1'
 				AWS_EB_APP_VERSION = "Petclinicdev-env-1-$Version"
 			}
+		
+		input{
+				message "Logon to build user, Press Proceed to continue"
+				submitter "build"
+					parameters {
+					string(name:'username', defaultValue: 'build', description: 'Promoting to Dev')
+					}
+				}
+				
            steps {
               script { 
 				def server = Artifactory.server 'artifactory'
@@ -77,11 +77,7 @@ pipeline {
                     }
             }
         }	
-		stage('Sanity check1') {
-            steps {
-                input "Deply to QA environment?"
-            }
-        }
+
 		stage('Deploy to QA') {
 			environment {
 				ARTIFACT_NAME = 'petclinic.war'
@@ -90,6 +86,13 @@ pipeline {
 				AWS_EB_ENVIRONMENT = 'Petclinicqa-env'
 				AWS_EB_APP_VERSION = "Petclinicqa-env-$Version"
 			}
+			input{
+				message "Logon to qa user, Press Proceed to continue"
+				submitter "qa"
+					parameters {
+					string(name:'username', defaultValue: 'qa', description: 'Promoting to QA')
+					}
+				}
            steps {
               script { 
 				def server = Artifactory.server 'artifactory'
@@ -113,11 +116,7 @@ pipeline {
                     }
             }
         }
-		stage('Sanity check2') {
-            steps {
-                input "Deply to prod environment?"
-            }
-        }
+
 		stage('Deploy to Prod') {
 			environment {
 				ARTIFACT_NAME = 'petclinic.war'
@@ -126,6 +125,13 @@ pipeline {
 				AWS_EB_ENVIRONMENT = 'Petclinicprod-env-1'
 				AWS_EB_APP_VERSION = "Petclinicprod-env-1-$Version"
 			}
+			input{
+				message "Logon to prod user, Press Proceed to continue"
+				submitter "prod"
+					parameters {
+					string(name:'username', defaultValue: 'prod', description: 'Promoting to Prod')
+					}
+				}
            steps {
               script { 
 				def server = Artifactory.server 'artifactory'
