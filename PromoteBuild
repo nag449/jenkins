@@ -32,22 +32,22 @@ pipeline {
 				 sleep 10
 				 rtMaven.deployer.deployArtifacts buildInfo
                }
-            }
-			post {
-                success {
-					input{
-						message "Logon to build user, Press Proceed to continue"
-						submitter "build"
-							parameters {
-							string(name:'username', defaultValue: 'build', description: 'Promoting to QA')
-							}
-						}
-						steps { 
-						echo "User: ${username} said Ok."
-						}
-                }
-            }
+            }			
         }
+		stage('Promoting to Dev')
+		{
+			input{
+				message "Logon to build user, Press Proceed to continue"
+				submitter "build"
+					parameters {
+					string(name:'username', defaultValue: 'build', description: 'Promoting to Dev')
+					}
+				}
+				steps { 
+				echo "User: ${username} said Ok."
+				}
+		
+		}
 		
 		stage('Deploy to Dev') {
 			environment {
