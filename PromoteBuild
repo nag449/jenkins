@@ -44,13 +44,7 @@ pipeline {
 				steps { 
 				echo "User: ${username} said Ok."
 				}
-        }
-		stage('Promoting to Dev')
-		{
-			
-		
-		}
-		
+        }	
 		stage('Deploy to Dev') {
 			environment {
 				ARTIFACT_NAME = 'petclinic.war'
