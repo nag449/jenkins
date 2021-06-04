@@ -47,11 +47,8 @@ pipeline {
 			}
 		
 		input{
-				message "Logon to build user, Press Proceed to continue"
-				submitter "build"
-					parameters {
-					string(name:'username', defaultValue: 'build', description: 'Promoting to Dev')
-					}
+				message "Promote to build, Press Proceed to continue"
+				submitter "build"	
 				}
 				
            steps {
@@ -87,11 +84,8 @@ pipeline {
 				AWS_EB_APP_VERSION = "Petclinicqa-env-$Version"
 			}
 			input{
-				message "Logon to qa user, Press Proceed to continue"
-				submitter "qa"
-					parameters {
-					string(name:'username', defaultValue: 'qa', description: 'Promoting to QA')
-					}
+				message "Promote to QA, Press Proceed to continue"
+				submitter "qa"	
 				}
            steps {
               script { 
@@ -126,11 +120,8 @@ pipeline {
 				AWS_EB_APP_VERSION = "Petclinicprod-env-1-$Version"
 			}
 			input{
-				message "Logon to prod user, Press Proceed to continue"
+				message "Promote to PROD, Press Proceed to continue"
 				submitter "prod"
-					parameters {
-					string(name:'username', defaultValue: 'prod', description: 'Promoting to Prod')
-					}
 				}
            steps {
               script { 
