@@ -47,7 +47,7 @@ pipeline {
 			}
 		
 		input{
-				message "Promote to build, Press Proceed to continue"
+				message "Promote to Dev, Press Proceed to continue"
 				submitter "build"	
 				}
 				
