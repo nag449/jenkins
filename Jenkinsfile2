@@ -1,0 +1,35 @@
+pipeline {
+agent any
+stages {
+	stage ('build') {
+		input{
+		message "Logon to build user, Press Proceed to continue"
+		submitter "build"
+			parameters {
+			string(name:'username', defaultValue: 'build', description: 'Promoting to QA')
+			}
+		}
+		steps { 
+		echo "User: ${username} said Ok."
+		}
+	}
+	stage ('promote to qa') {
+		input{
+		message "logon to qa user, Press proceed to continue"
+		submitter "qa"
+			parameters {
+			string(name:'username', defaultValue: 'qa', description: 'Promoting to prod')
+			}
+		}
+		steps { 
+		echo "User: ${username} said Ok."
+		}
+	}
+	stage ('promote to prod') {
+
+		steps { 
+			echo "promote to prod completed"
+		}
+	}
+  }
+}
